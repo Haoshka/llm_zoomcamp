@@ -21,6 +21,8 @@ services:
       - "${APP_PORT:-5000}:5000"
     depends_on:
       - postgres
+    volumes:
+      - ./data:/app/data   # maps host ./data to container /app/data
 
   grafana:
     image: grafana/grafana:latest
