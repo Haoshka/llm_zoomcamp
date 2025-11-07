@@ -5,54 +5,54 @@ from time import time
 
 from groq import Groq
 
-client = Groq()
-# api_key=os.environ.get("GROQ_API_KEY")
-index = ingest.load_index()
 
+
+client = Groq() 
+# api_key=os.environ.get("GROQ_API_KEY")s
+index = ingest.load_index()
 
 def search(query):
     boost = {
-        'document type': 3.0,
-        'description': 2.5,
-        'issued by': 1.2,
-        'used by': 1.0,
-        'mode of transport': 0.8,
-        'notes': 0.5
+        'exercise_name': 2.11,
+        'type_of_activity': 1.46,
+        'type_of_equipment': 0.65,
+        'body_part': 2.65,
+        'type': 1.31,
+        'muscle_groups_activated': 2.54,
+        'instructions': 0.74
     }
 
     results = index.search(
-        query=query,
-        filter_dict={},  # optional filters later (e.g., mode='Sea')
-        boost_dict=boost,
-        num_results=5
+        query=query, filter_dict={}, boost_dict=boost, num_results=10
     )
 
     return results
 
 
+
 prompt_template = """
-You're a freight forwarding specialist. Answer the QUESTION based on the provided shipping documents database.
-Use only the facts from the KNOWLEDGE BASE when answering the QUESTION.
+You're a fitness instructor. Answer the QUESTION based on the CONTEXT from our exercises database.
+Use only the facts from the CONTEXT when answering the QUESTION.
 
 QUESTION: {question}
 
-KNOWLEDGE BASE:
+CONTEXT:
 {context}
 """.strip()
 
 entry_template = """
-document type: {document type}
-description: {description}
-issued by: {issued by}
-used by: {used by}
-mode of transport: {mode of transport}
-notes: {notes}
+exercise_name: {exercise_name}
+type_of_activity: {type_of_activity}
+type_of_equipment: {type_of_equipment}
+body_part: {body_part}
+type: {type}
+muscle_groups_activated: {muscle_groups_activated}
+instructions: {instructions}
 """.strip()
-
 
 def build_prompt(query, search_results):
     context = ""
-    
+
     for doc in search_results:
         context = context + entry_template.format(**doc) + "\n\n"
 

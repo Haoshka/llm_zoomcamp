@@ -28,3 +28,9 @@ python - <<'EOF'
 from pathlib import Path
 print(list(Path("/app/data").glob("*")))
 EOF
+
+## run streamlit
+
+export POSTGRES_HOST=localhost
+export BACKEND_URL="http://localhost:5000"
+streamlit run streamlit_app.py

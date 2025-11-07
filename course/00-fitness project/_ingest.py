@@ -14,12 +14,13 @@ def load_index(data_path=DATA_PATH):
 
     index = minsearch.Index(
         text_fields=[
-            'document type',
-            'description',
-            'issued by',
-            'used by',
-            'mode of transport',
-            'notes'
+            "exercise_name",
+            "type_of_activity",
+            "type_of_equipment",
+            "body_part",
+            "type",
+            "muscle_groups_activated",
+            "instructions",
         ],
         keyword_fields=["id"],
     )
