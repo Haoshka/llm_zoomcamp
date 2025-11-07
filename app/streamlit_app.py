@@ -1,4 +1,4 @@
-import app.streamlit_app as st
+import streamlit_app as st
 import requests
 import os
 
