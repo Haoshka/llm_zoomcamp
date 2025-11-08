@@ -9,7 +9,7 @@ COPY ["Pipfile", "Pipfile.lock", "./"]
 
 RUN pipenv install --deploy --ignore-pipfile --system
 
-COPY app .
+COPY freight_doc_app .
 
 EXPOSE 5000
 

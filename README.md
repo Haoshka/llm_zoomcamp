@@ -11,11 +11,19 @@ docker run -it --rm \
     -p 5000:5000 \
     app
 
-
-
+## initialize db
 pipenv shell
 
-cd app/
+cd app
+
+export POSTGRES_HOST=localhost
+python db_prep.py
+
+
+## run the app from virtual env
+pipenv shell
+
+cd app
 
 export POSTGRES_HOST=localhost
 python app.py
@@ -34,3 +42,16 @@ EOF
 export POSTGRES_HOST=localhost
 export BACKEND_URL="http://localhost:5000"
 streamlit run streamlit_app.py
+
+
+## run grafana
+pipenv shell 
+cd grafana 
+# make sure the POSTGRES_HOST variable is not overwritten 
+env | grep POSTGRES_HOST 
+python init.py
+
+
+## check csv file
+
+docker exec -it <container id> bash ls data/
